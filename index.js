@@ -357,7 +357,7 @@ function ResponseToDataArray(commandConfig, str) {
  */
 function SendDataToInflux (data, url) {
 	if (data) {
-		log.info('influx:SEND', data);
+		
 		request.post({
 			auth: {
 				user: session.influxUser? session.influxUser : '',
@@ -369,8 +369,19 @@ function SendDataToInflux (data, url) {
 			url: url ? url : session.influxUrl,
 			body: data
 		}, function (error, response, body) {
-			if (error) {
-				log.error('influx', error);
+			if (body.length == 0) {
+				log.info ('influx','Sent Successfully');
+			}	
+			else {
+				log.error ('influx','');
+				log.error ('influx','');
+				log.error ('influx','------------------ERROR-------------------------------------------');
+				log.error ('influx','');
+				log.error ('influx','');
+				log.error ('influx', body);
+				log.error ('influx','');
+				log.error ('influx','------------------ERROR (reason at end of string)------------------');
+				//updated CyberTza
 			}
 		});
 	}
